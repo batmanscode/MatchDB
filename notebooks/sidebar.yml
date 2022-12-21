@@ -1,0 +1,8 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_pymatch.ipynb
+      - nbdev.yml
+      - sidebar.yml
+      - styles.css
