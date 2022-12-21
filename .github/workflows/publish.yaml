@@ -8,8 +8,8 @@ name: Quarto Publish
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    # permissions:
+    #   contents: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v2 
@@ -26,11 +26,11 @@ jobs:
       - run: pip install -r requirements.txt
       - run: pip install nbdev && nbdev_proc_nbs && cd _proc && quarto publish quarto-pub --id 899d1558-c247-4926-afbc-d0c6044838c0
       
-      - name: Render and Publish 
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: quarto-pub
-          # path: _proc
-          QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Render and Publish 
+      #   uses: quarto-dev/quarto-actions/publish@v2
+      #   with:
+      #     target: quarto-pub
+      #     # path: _proc
+      #     QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
+      #   # env:
+      #   #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
