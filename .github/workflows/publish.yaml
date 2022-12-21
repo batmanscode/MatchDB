@@ -21,7 +21,6 @@ jobs:
           python-version: '3.8'
           cache: 'pip'
       - run: pip install -r requirements.txt
-      - run: cd _proc && quarto render
       
       - name: Render and Publish 
         uses: quarto-dev/quarto-actions/publish@v2
