@@ -23,7 +23,7 @@ jobs:
           python-version: '3.8'
           cache: 'pip'
       - run: pip install -r requirements.txt
-      - run: nbdev_proc_nbs && cd _proc && quarto publish quarto-pub
+      - run: pip install nbdev && nbdev_proc_nbs && cd _proc && quarto publish quarto-pub
       
       - name: Render and Publish 
         uses: quarto-dev/quarto-actions/publish@v2
