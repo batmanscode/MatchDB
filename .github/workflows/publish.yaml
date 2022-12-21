@@ -30,7 +30,7 @@ jobs:
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: quarto-pub
-          path: _proc
+          # path: _proc
           QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
         # env:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
