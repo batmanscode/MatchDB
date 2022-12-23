@@ -22,9 +22,9 @@ jobs:
         with:
           python-version: '3.8'
           cache: 'pip'
-          QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
+          # QUARTO_PUB_AUTH_TOKEN: ${{ secrets.QUARTO_PUB_AUTH_TOKEN }}
       - run: pip install -r requirements.txt
-      - run: pip install nbdev && nbdev_docs && nbdev_proc_nbs && cd _proc && quarto publish quarto-pub --id 899d1558-c247-4926-afbc-d0c6044838c0 && quarto render
+      # - run: pip install nbdev && nbdev_docs && nbdev_proc_nbs && cd _proc && quarto publish quarto-pub --id 899d1558-c247-4926-afbc-d0c6044838c0 && quarto render
       
       - name: Render and Publish 
         uses: quarto-dev/quarto-actions/publish@v2
