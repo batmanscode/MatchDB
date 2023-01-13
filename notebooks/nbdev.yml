@@ -2,8 +2,8 @@ project:
   output-dir: _docs
 
 website:
-  title: "pyMatch"
-  site-url: "https://batmanscode.github.io/pyMatch"
+  title: "PyMatch"
+  site-url: "https://batmanscode.github.io/PyMatch"
   description: "Suggesting people to connect with based on shared interests"
   repo-branch: main
-  repo-url: "https://github.com/batmanscode/pyMatch"
+  repo-url: "https://github.com/batmanscode/PyMatch"

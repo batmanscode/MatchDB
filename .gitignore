@@ -1,7 +1,6 @@
-# _docs/
-# _proc/
-/.quarto/
-/_site/
+_docs/
+_proc/
+.pypirc
 
 *.bak
 .gitattributes
