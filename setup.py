@@ -41,7 +41,12 @@ setuptools.setup(
     url = cfg['git_url'],
     packages = setuptools.find_packages(),
     include_package_data = True,
-    install_requires = requirements,
+    # install_requires = requirements,
+    install_requires = [
+        'pandas==1.2.5',
+        'deta==1.1.0',
+        'ulid-py==1.1.0',
+    ],
     extras_require={ 'dev': dev_requirements },
     dependency_links = cfg.get('dep_links','').split(),
     python_requires  = '>=' + cfg['min_python'],
