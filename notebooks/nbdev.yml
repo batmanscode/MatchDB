@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "MatchDB"
+  site-url: "https://batmanscode.github.io/MatchDB"
+  description: "Suggesting people to connect with based on shared interests"
+  repo-branch: main
+  repo-url: "https://github.com/batmanscode/MatchDB"
