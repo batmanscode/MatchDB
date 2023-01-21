@@ -171,7 +171,7 @@ def match_interests(user_id: str,
     "Match users to a given user_id and return names and common/shared interests"
 
     deta = Deta(os.environ["PROJECT_KEY"])
-    db = deta.Base(database_name)
+    users = deta.Base(database_name)
 
     # get interests for a user
     interests = users.get(user_id)['interests']
