@@ -19,7 +19,6 @@ def add_someone(username: str,
                 user_id: str, # unique identifier to authenticate users
                 database_name: str, # create or connect to an existing database
                 interests: List[str],
-                name: Optional[str] = None,
                 project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
                 ):
 
@@ -31,29 +30,16 @@ def add_someone(username: str,
     
     deta = Deta(os.environ["PROJECT_KEY"])
     db = deta.Base(database_name)
-    
-    if name:
-
-        user = db.put(
-            {
-                'key': ulid.new().str,
-                "date": datetime.now().strftime("%d-%m-%Y %H:00"),
-                "user id": user_id,
-                'name': name,
-                'interests': list(map(str.lower, interests))
-                }
-        )
-        
-    else:
-  
-        user = db.put(
-            {
-                'key': ulid.new().str,
-                "date": datetime.now().strftime("%d-%m-%Y %H:00"),
-                "user id": user_id,
-                'interests': interests
-                }
-        )
+      
+    user = db.put(
+        {
+            'key': ulid.new().str,
+            "username": username,
+            "date": datetime.now().strftime("%d-%m-%Y %H:00"),
+            "user id": user_id,
+            'interests': interests
+            }
+    )
 
 # %% ../notebooks/00_pymatch.ipynb 10
 def find_by_userid(user_id: str,
@@ -108,7 +94,6 @@ def add_interests(username: str,
                   user_id: str, # unique identifier to authenticate users
                   interests: List[str], 
                   database_name: str, # create or connect to an existing database
-                  name: Optional[str] = None,
                   project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
                  ):
 
@@ -136,8 +121,7 @@ def add_interests(username: str,
 
     else:
         # create new user if they don't exist
-        add_someone(name = name,
-                    username = username, 
+        add_someone(username = username, 
                     user_id = user_id,
                     interests = interests, 
                     database_name = database_name
@@ -182,7 +166,7 @@ def delete_interests(user_id: str, # unique identifier to authenticate users
 def match_interests(user_id: str,
                     database_name: str,
                     project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
-                   ):
+                   ) -> List[dict]:
     
     "Match users to a given user_id and return names and common/shared interests"
 
@@ -195,15 +179,17 @@ def match_interests(user_id: str,
     # match
     match = users.fetch([{'interests?contains' : item} for item in interests]).items
 
-    name = item['name']
-    common_interests = set(interests) & set(item['interests'])
+    # name = item['name']
+    # common_interests = set(interests) & set(item['interests'])
 
     matches = []
     for item in match:
         matches.append(
             {
-                'name': item['name'],
-                'common interests': set(interests) & set(item['interests'])
+                'username': item['username'],
+                'user id': item['user id'],
+                'common interests': list(set(interests) & set(item['interests'])),
+                'number of common interests': len(set(interests) & set(item['interests']))
             }
         )
 
@@ -211,7 +197,7 @@ def match_interests(user_id: str,
 
 # %% ../notebooks/00_pymatch.ipynb 24
 def database_exists(database_name: str,
-                   project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
+                    project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
                    ):
     
     "check if db exists by checking if there's at least one item"
@@ -226,7 +212,7 @@ def database_exists(database_name: str,
 
 # %% ../notebooks/00_pymatch.ipynb 25
 def fetch_all(database_name: str,
-             project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
+              project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
              ):
     """
     fetches the whole database
@@ -253,7 +239,7 @@ def fetch_all(database_name: str,
 
 # %% ../notebooks/00_pymatch.ipynb 26
 def database_to_dataframe(database_name: str,
-                         project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
+                          project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
                          ):
     """
     fetches the whole database and converts it to a pandas dataframe
