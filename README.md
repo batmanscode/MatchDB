@@ -9,7 +9,8 @@ documentation.
 ## Install
 
 ``` sh
-pip install PyMatch
+pip install matchdb
+# or pip install git+https://github.com/batmanscode/MatchDB.git
 ```
 
 ## How to use

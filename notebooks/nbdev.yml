@@ -2,7 +2,7 @@ project:
   output-dir: _docs
 
 website:
-  title: "MatchDB"
+  title: "matchdb"
   site-url: "https://batmanscode.github.io/MatchDB"
   description: "Suggesting people to connect with based on shared interests"
   repo-branch: main
