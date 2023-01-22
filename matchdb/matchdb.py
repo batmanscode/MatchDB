@@ -41,7 +41,7 @@ def add_someone(username: str,
             }
     )
 
-# %% ../notebooks/00_pymatch.ipynb 10
+# %% ../notebooks/00_pymatch.ipynb 11
 def find_by_userid(user_id: str,
                    database_name: str,
                    project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
@@ -64,7 +64,7 @@ def find_by_userid(user_id: str,
         print("user doesn't exist")
         raise ValueError("user doesn't exist")
 
-# %% ../notebooks/00_pymatch.ipynb 12
+# %% ../notebooks/00_pymatch.ipynb 13
 def delete_user(user_id: str,
                 database_name: str,
                 project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
@@ -89,7 +89,7 @@ def delete_user(user_id: str,
     else:
         print(f"user {user_id} not in {database_name}")
 
-# %% ../notebooks/00_pymatch.ipynb 15
+# %% ../notebooks/00_pymatch.ipynb 16
 def add_interests(username: str, 
                   user_id: str, # unique identifier to authenticate users
                   interests: List[str], 
@@ -127,7 +127,7 @@ def add_interests(username: str,
                     database_name = database_name
                    )
 
-# %% ../notebooks/00_pymatch.ipynb 17
+# %% ../notebooks/00_pymatch.ipynb 18
 def show_interests(user_id: str,
                    database_name: str,
                    project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
@@ -137,7 +137,7 @@ def show_interests(user_id: str,
     
     return find_by_userid(user_id, database_name, project_key)["interests"]
 
-# %% ../notebooks/00_pymatch.ipynb 19
+# %% ../notebooks/00_pymatch.ipynb 20
 def delete_interests(user_id: str, # unique identifier to authenticate users
                      remove_interests: List[str], 
                      database_name: str, # create or connect to an existing database
@@ -162,7 +162,7 @@ def delete_interests(user_id: str, # unique identifier to authenticate users
     # update interests
     user = db.update({'interests': list(map(str.lower, new))}, key=key)
 
-# %% ../notebooks/00_pymatch.ipynb 21
+# %% ../notebooks/00_pymatch.ipynb 22
 def match_interests(user_id: str,
                     database_name: str,
                     project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
@@ -172,9 +172,13 @@ def match_interests(user_id: str,
 
     deta = Deta(os.environ["PROJECT_KEY"])
     users = deta.Base(database_name)
+    
+    # get key
+    from_user = users.fetch({"user id": user_id}).items
+    key = from_user[0]["key"]
 
     # get interests for a user
-    interests = users.get(user_id)['interests']
+    interests = users.get(key)['interests']
 
     # match
     match = users.fetch([{'interests?contains' : item} for item in interests]).items
@@ -195,7 +199,7 @@ def match_interests(user_id: str,
 
     return matches
 
-# %% ../notebooks/00_pymatch.ipynb 24
+# %% ../notebooks/00_pymatch.ipynb 25
 def database_exists(database_name: str,
                     project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
                    ):
@@ -210,7 +214,7 @@ def database_exists(database_name: str,
     else:
         raise NameError(f"{database_name} doesn't exist")
 
-# %% ../notebooks/00_pymatch.ipynb 25
+# %% ../notebooks/00_pymatch.ipynb 26
 def fetch_all(database_name: str,
               project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
              ):
@@ -237,7 +241,7 @@ def fetch_all(database_name: str,
 
     return all_items
 
-# %% ../notebooks/00_pymatch.ipynb 26
+# %% ../notebooks/00_pymatch.ipynb 27
 def database_to_dataframe(database_name: str,
                           project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
                          ):
@@ -253,7 +257,7 @@ def database_to_dataframe(database_name: str,
 
     return pd.DataFrame.from_dict(all_items)
 
-# %% ../notebooks/00_pymatch.ipynb 28
+# %% ../notebooks/00_pymatch.ipynb 29
 def count_interests(database_name: str ='users'):
     """
     Shows each interest and how many times they occur. If needed, this can work for any column that contains a list of strings.
@@ -267,7 +271,7 @@ def count_interests(database_name: str ='users'):
 
     return count
 
-# %% ../notebooks/00_pymatch.ipynb 29
+# %% ../notebooks/00_pymatch.ipynb 30
 def interestcount_to_dataframe(database_name: str ='users'):
     """
     Get interest counts as a pandas dataframe
@@ -286,7 +290,7 @@ def interestcount_to_dataframe(database_name: str ='users'):
     
     return df_value_counts
 
-# %% ../notebooks/00_pymatch.ipynb 31
+# %% ../notebooks/00_pymatch.ipynb 32
 def total_users(database_name: str):
     "Count total users. Uses `fetch_all`"
 
