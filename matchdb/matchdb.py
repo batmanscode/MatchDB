@@ -19,6 +19,7 @@ def add_someone(username: str,
                 user_id: str, # unique identifier to authenticate users
                 database_name: str, # create or connect to an existing database
                 interests: List[str],
+                group_id: Optional[str] = None, # id for the group/server the user is from
                 project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
                 ):
 
@@ -34,14 +35,14 @@ def add_someone(username: str,
     user = db.put(
         {
             'key': ulid.new().str,
-            "username": username,
             "date": datetime.now().strftime("%d-%m-%Y %H:00"),
-            "user id": user_id,
+            "user_id": user_id,
+            "group_id": group_id,
             'interests': interests
             }
     )
 
-# %% ../notebooks/00_pymatch.ipynb 11
+# %% ../notebooks/00_pymatch.ipynb 10
 def find_by_userid(user_id: str,
                    database_name: str,
                    project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
@@ -54,7 +55,7 @@ def find_by_userid(user_id: str,
 
     user = db.fetch(
         {
-        "user id": user_id
+        "user_id": user_id
         }
     ).items
 
@@ -64,7 +65,7 @@ def find_by_userid(user_id: str,
         print("user doesn't exist")
         raise ValueError("user doesn't exist")
 
-# %% ../notebooks/00_pymatch.ipynb 13
+# %% ../notebooks/00_pymatch.ipynb 12
 def delete_user(user_id: str,
                 database_name: str,
                 project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
@@ -77,7 +78,7 @@ def delete_user(user_id: str,
 
     delete = db.fetch(
         {
-        "user id": user_id
+        "user_id": user_id
         }
     ).items
 
@@ -89,11 +90,12 @@ def delete_user(user_id: str,
     else:
         print(f"user {user_id} not in {database_name}")
 
-# %% ../notebooks/00_pymatch.ipynb 16
+# %% ../notebooks/00_pymatch.ipynb 15
 def add_interests(username: str, 
                   user_id: str, # unique identifier to authenticate users
                   interests: List[str], 
                   database_name: str, # create or connect to an existing database
+                  group_id: Optional[str] = None, # id for the group/server the user is from
                   project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
                  ):
 
@@ -103,7 +105,11 @@ def add_interests(username: str,
     db = deta.Base(database_name)
     
     # check if user exists
-    check = db.fetch({"user id": user_id}).items
+    # if there's group + user ID then check for the combination
+    if group_id is None:
+        check = db.fetch({"user_id": user_id}).items
+    else:
+        check = db.fetch({"group_id": user_id, "group_id": user_id}).items
     
     if bool(check):
         # get key
@@ -116,28 +122,29 @@ def add_interests(username: str,
         # only add unique interests i.e. no duplicates
         new = list(set(current+interests))
         
-        # update interests
+        # update lowercase interests
         user = db.update({'interests': list(map(str.lower, new))}, key=key)
 
     else:
         # create new user if they don't exist
         add_someone(username = username, 
                     user_id = user_id,
+                    group_id = group_id,
                     interests = interests, 
                     database_name = database_name
                    )
 
-# %% ../notebooks/00_pymatch.ipynb 18
+# %% ../notebooks/00_pymatch.ipynb 17
 def show_interests(user_id: str,
                    database_name: str,
                    project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
-                  ) -> List[str]:
+                  ) -> list[str]:
     
     "Gets a list of interests for a given user. Uses `find_by_userid`."
     
     return find_by_userid(user_id, database_name, project_key)["interests"]
 
-# %% ../notebooks/00_pymatch.ipynb 20
+# %% ../notebooks/00_pymatch.ipynb 19
 def delete_interests(user_id: str, # unique identifier to authenticate users
                      remove_interests: List[str], 
                      database_name: str, # create or connect to an existing database
@@ -156,13 +163,13 @@ def delete_interests(user_id: str, # unique identifier to authenticate users
     new = list(set(current) - set(remove_interests))
     
     # get key
-    from_user = db.fetch({"user id": user_id}).items
+    from_user = db.fetch({"user_id": user_id}).items
     key = from_user[0]["key"]
     
     # update interests
     user = db.update({'interests': list(map(str.lower, new))}, key=key)
 
-# %% ../notebooks/00_pymatch.ipynb 22
+# %% ../notebooks/00_pymatch.ipynb 21
 def match_interests(user_id: str,
                     database_name: str,
                     project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
@@ -174,7 +181,7 @@ def match_interests(user_id: str,
     users = deta.Base(database_name)
     
     # get key
-    from_user = users.fetch({"user id": user_id}).items
+    from_user = users.fetch({"user_id": user_id}).items
     key = from_user[0]["key"]
 
     # get interests for a user
@@ -191,18 +198,18 @@ def match_interests(user_id: str,
         matches.append(
             {
                 'username': item['username'],
-                'user id': item['user id'],
+                'user_id': item['user_id'],
                 'common interests': list(set(interests) & set(item['interests'])),
-                'number of common interests': len(set(interests) & set(item['interests']))
+                'common interests count': len(set(interests) & set(item['interests']))
             }
         )
 
     return matches
 
-# %% ../notebooks/00_pymatch.ipynb 25
+# %% ../notebooks/00_pymatch.ipynb 24
 def database_exists(database_name: str,
                     project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
-                   ):
+                   ) -> bool:
     
     "check if db exists by checking if there's at least one item"
 
@@ -214,10 +221,10 @@ def database_exists(database_name: str,
     else:
         raise NameError(f"{database_name} doesn't exist")
 
-# %% ../notebooks/00_pymatch.ipynb 26
+# %% ../notebooks/00_pymatch.ipynb 25
 def fetch_all(database_name: str,
               project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
-             ):
+             ) -> List[dict]:
     """
     fetches the whole database
 
@@ -241,10 +248,10 @@ def fetch_all(database_name: str,
 
     return all_items
 
-# %% ../notebooks/00_pymatch.ipynb 27
+# %% ../notebooks/00_pymatch.ipynb 26
 def database_to_dataframe(database_name: str,
                           project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
-                         ):
+                         ) -> pd.DataFrame:
     """
     fetches the whole database and converts it to a pandas dataframe
 
@@ -257,8 +264,8 @@ def database_to_dataframe(database_name: str,
 
     return pd.DataFrame.from_dict(all_items)
 
-# %% ../notebooks/00_pymatch.ipynb 29
-def count_interests(database_name: str ='users'):
+# %% ../notebooks/00_pymatch.ipynb 28
+def count_interests(database_name: str ='users') -> List[dict]:
     """
     Shows each interest and how many times they occur. If needed, this can work for any column that contains a list of strings.
 
@@ -271,8 +278,8 @@ def count_interests(database_name: str ='users'):
 
     return count
 
-# %% ../notebooks/00_pymatch.ipynb 30
-def interestcount_to_dataframe(database_name: str ='users'):
+# %% ../notebooks/00_pymatch.ipynb 29
+def interestcount_to_dataframe(database_name: str ='users') -> pd.DataFrame:
     """
     Get interest counts as a pandas dataframe
 
@@ -290,8 +297,8 @@ def interestcount_to_dataframe(database_name: str ='users'):
     
     return df_value_counts
 
-# %% ../notebooks/00_pymatch.ipynb 32
-def total_users(database_name: str):
+# %% ../notebooks/00_pymatch.ipynb 31
+def total_users(database_name: str) -> int:
     "Count total users. Uses `fetch_all`"
 
     return len(fetch_all(database_name))
