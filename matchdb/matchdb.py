@@ -138,7 +138,7 @@ def add_interests(username: str,
 def show_interests(user_id: str,
                    database_name: str,
                    project_key: str = "PROJECT_KEY" # the environment variable name where your Deta project key is stored
-                  ) -> list[str]:
+                  ) -> List[str]:
     
     "Gets a list of interests for a given user. Uses `find_by_userid`."
     
