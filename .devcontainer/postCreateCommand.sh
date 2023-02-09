@@ -11,3 +11,8 @@ jupyter nbextension enable navigation-hotkeys/main
 pip install jupyter_nbextensions_configurator
 nbdev_install_hooks
 pip install nbdev-extensions
+
+# launch jupyter notebook
+# see "Connect to a remote Jupyter server" in https://code.visualstudio.com/docs/datascience/notebooks-web
+# jupyter notebook --NotebookApp.allow_origin='*' --NotebookApp.ip='0.0.0.0'
+# jupyter lab --NotebookApp.allow_origin='*' --NotebookApp.ip='0.0.0.0'

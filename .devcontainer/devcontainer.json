@@ -7,7 +7,8 @@
 		"ghcr.io/devcontainers/features/python:1": {
 			"installJupyterlab": "true"
 		},
-		"ghcr.io/devcontainers/features/github-cli:1": {}
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/node:1": {}
 	},
 
 	// Configure tool-specific properties.
