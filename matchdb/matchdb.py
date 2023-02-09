@@ -100,7 +100,7 @@ def show_interests(user_id: str, # unique identifier
     
     "Gets a list of interests for a given user within a group_id. Uses `find_user`."
     
-    return find_user(user_id, database_name, project_key)[0]["interests"]
+    return find_user(user_id=user_id, group_id=group_id, database_name=database_name, project_key=project_key)[0]["interests"]
 
 # %% ../notebooks/00_pymatch.ipynb 18
 def add_interests(user_id: str, # unique identifier to authenticate users
