@@ -58,7 +58,7 @@ def find_user(user_id: str,
     if group_id is None:
         user = db.fetch({"user_id": user_id}).items
     else:
-        user = db.fetch({"group_id": user_id, "group_id": user_id}).items
+        user = db.fetch({"user_id": user_id, "group_id": group_id}).items
 
     if bool(user):
         return user
