@@ -98,9 +98,9 @@ def show_interests(user_id: str, # unique identifier
                    project_key: str = "DETA_PROJECT_KEY" # the environment variable name where your Deta project key is stored
                   ) -> List[str]:
     
-    "Gets a list of interests for a given user within a group_id. Uses `find_by_userid`."
+    "Gets a list of interests for a given user within a group_id. Uses `find_user`."
     
-    return find_by_userid(user_id, database_name, project_key)[0]["interests"]
+    return find_user(user_id, database_name, project_key)[0]["interests"]
 
 # %% ../notebooks/00_pymatch.ipynb 18
 def add_interests(user_id: str, # unique identifier to authenticate users
