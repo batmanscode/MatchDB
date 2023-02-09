@@ -127,7 +127,7 @@ def add_interests(user_id: str, # unique identifier to authenticate users
         key = check[0]["key"]
         
         # get a list of existing interests
-        current = show_interests(user_id, group_id, database_name, project_key)
+        current = show_interests(user_id=user_id, group_id=group_id, database_name=database_name, project_key=project_key)
         
         # concat the new interest(s) to the existing list
         # only add unique interests i.e. no duplicates
@@ -159,7 +159,7 @@ def delete_interests(user_id: str, # unique identifier to authenticate users
     
     if group_id is not None:
         # get a list of existing interests
-        current = show_interests(user_id, group_id, database_name, project_key)
+        current = show_interests(user_id=user_id, group_id=group_id, database_name=database_name, project_key=project_key)
 
         # check if the thing they want to delete is in the list at all
         # https://stackoverflow.com/questions/20238281/check-whether-an-item-in-a-list-exist-in-another-list-or-not-python#
