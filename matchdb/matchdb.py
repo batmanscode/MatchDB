@@ -120,7 +120,7 @@ def add_interests(user_id: str, # unique identifier to authenticate users
     if group_id is None:
         check = db.fetch({"user_id": user_id}).items
     else:
-        check = db.fetch({"group_id": user_id, "group_id": user_id}).items
+        check = db.fetch({"user_id": user_id, "group_id": group_id}).items
     
     if bool(check):
         # get key
