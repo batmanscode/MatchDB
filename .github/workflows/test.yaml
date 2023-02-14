@@ -6,5 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: fastai/workflows/nbdev-ci@master
+      env:
+        DETA_PROJECT_KEY: ${{ secrets.DETA_PROJECT_KEY }}
       with:
         version: '3.8'
