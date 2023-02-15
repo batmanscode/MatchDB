@@ -37,7 +37,7 @@ def add_someone(user_id: str, # unique identifier to authenticate users
             "date": datetime.now().strftime("%d-%m-%Y %H:00"),
             "user_id": user_id,
             "group_id": group_id,
-            'interests': interests
+            'interests': list(map(str.lower, interests)) # lowercase
             }
     )
 
@@ -129,12 +129,16 @@ def add_interests(user_id: str, # unique identifier to authenticate users
         # get a list of existing interests
         current = show_interests(user_id=user_id, group_id=group_id, database_name=database_name, project_key=project_key)
         
+        # make lowercase
+        # note: current will already be all lowercase
+        interests = list(map(str.lower, interests))
+        
         # concat the new interest(s) to the existing list
         # only add unique interests i.e. no duplicates
         new = list(set(current+interests))
         
         # update lowercase interests
-        user = db.update({'interests': list(map(str.lower, new))}, key=key)
+        user = db.update({'interests': new}, key=key)
 
     else:
         # create new user if they don't exist
