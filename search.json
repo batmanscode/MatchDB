@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "pymatch.html",
+    "href": "pymatch.html",
+    "title": "MatchDB Core",
+    "section": "",
+    "text": "PyMatch is a database of users and their interests. Given a user from its database, it will search and return others with matching/mutual interests"
+  },
+  {
+    "objectID": "pymatch.html#users",
+    "href": "pymatch.html#users",
+    "title": "MatchDB Core",
+    "section": "Users",
+    "text": "Users\n\nAdd\n\nsource\n\n\nadd_someone\n\n add_someone (user_id:str, database_name:str, interests:List[str],\n              group_id:Optional[str]=None,\n              project_key:str='DETA_PROJECT_KEY')\n\nCreate a new user and add their interests. Will be used by add_interests.\nAll interests will be made lowercase.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nuser_id\nstr\n\nunique identifier to authenticate users\n\n\ndatabase_name\nstr\n\ncreate or connect to an existing database\n\n\ninterests\ntyping.List[str]\n\n\n\n\ngroup_id\ntyping.Optional[str]\nNone\nid for the group/server the user is from\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored\n\n\n\n\n\nFind\n\nsource\n\n\nfind_user\n\n find_user (user_id:str, database_name:str, group_id:Optional[str]=None,\n            project_key:str='DETA_PROJECT_KEY')\n\nFind all data on a user from thier user_id and/or group_id.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nuser_id\nstr\n\n\n\n\ndatabase_name\nstr\n\n\n\n\ngroup_id\ntyping.Optional[str]\nNone\nid for the group/server the user is from\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored\n\n\nReturns\ntyping.List[dict]\n\n\n\n\n\n\n\nDelete\n\nsource\n\n\ndelete_user\n\n delete_user (user_id:str, database_name:str,\n              project_key:str='DETA_PROJECT_KEY')\n\nDeletes an entry using thier user_id if they exist\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nuser_id\nstr\n\n\n\n\ndatabase_name\nstr\n\n\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored"
+  },
+  {
+    "objectID": "pymatch.html#interests",
+    "href": "pymatch.html#interests",
+    "title": "MatchDB Core",
+    "section": "Interests",
+    "text": "Interests\n\nShow a user’s interests\n\nsource\n\n\nshow_interests\n\n show_interests (user_id:str, database_name:str, group_id:str,\n                 project_key:str='DETA_PROJECT_KEY')\n\nGets a list of interests for a given user within a group_id. Uses find_user.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nuser_id\nstr\n\nunique identifier\n\n\ndatabase_name\nstr\n\n\n\n\ngroup_id\nstr\n\nid for the group/server the user is from\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored\n\n\nReturns\ntyping.List[str]\n\n\n\n\n\n\n\nAdd\n\nsource\n\n\nadd_interests\n\n add_interests (user_id:str, interests:List[str], database_name:str,\n                group_id:Optional[str]=None,\n                project_key:str='DETA_PROJECT_KEY')\n\nAdd new interests to a user if they exist or creates a new user using add_someone if they don’t.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nuser_id\nstr\n\nunique identifier to authenticate users\n\n\ninterests\ntyping.List[str]\n\n\n\n\ndatabase_name\nstr\n\ncreate or connect to an existing database\n\n\ngroup_id\ntyping.Optional[str]\nNone\nid for the group/server the user is from\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored\n\n\n\n\n\nDelete interests\n\nsource\n\n\ndelete_interests\n\n delete_interests (user_id:str, remove_interests:List[str],\n                   database_name:str, group_id:Optional[str]=None,\n                   project_key:str='DETA_PROJECT_KEY')\n\nDelete interest(s). If group_is is None then interests of the user will be deleted in all groups.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nuser_id\nstr\n\nunique identifier to authenticate users\n\n\nremove_interests\ntyping.List[str]\n\n\n\n\ndatabase_name\nstr\n\ncreate or connect to an existing database\n\n\ngroup_id\ntyping.Optional[str]\nNone\nid for the group/server the user is from\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored"
+  },
+  {
+    "objectID": "pymatch.html#match",
+    "href": "pymatch.html#match",
+    "title": "MatchDB Core",
+    "section": "Match",
+    "text": "Match\n\nsource\n\nmatch_interests\n\n match_interests (user_id:str, database_name:str,\n                  project_key:str='DETA_PROJECT_KEY')\n\nMatch users to a given user_id and return names and common/shared interests\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nuser_id\nstr\n\n\n\n\ndatabase_name\nstr\n\n\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored\n\n\nReturns\ntyping.List[dict]"
+  },
+  {
+    "objectID": "pymatch.html#stats",
+    "href": "pymatch.html#stats",
+    "title": "MatchDB Core",
+    "section": "Stats",
+    "text": "Stats\n\nGet whole database\n\nsource\n\n\ndatabase_exists\n\n database_exists (database_name:str, project_key:str='DETA_PROJECT_KEY')\n\ncheck if db exists by checking if there’s at least one item\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\ndatabase_name\nstr\n\n\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored\n\n\nReturns\nbool\n\n\n\n\n\n\nsource\n\n\nfetch_all\n\n fetch_all (database_name:str, project_key:str='DETA_PROJECT_KEY')\n\nfetches the whole database\nthis is from deta’s docs: https://docs.deta.sh/docs/base/sdk/#fetch-all-items-1\nuses database_exists\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\ndatabase_name\nstr\n\n\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored\n\n\nReturns\ntyping.List[dict]\n\n\n\n\n\n\nsource\n\n\ndatabase_to_dataframe\n\n database_to_dataframe (database_name:str,\n                        project_key:str='DETA_PROJECT_KEY')\n\nfetches the whole database and converts it to a pandas dataframe\nuses fetch_all\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\ndatabase_name\nstr\n\n\n\n\nproject_key\nstr\nDETA_PROJECT_KEY\nthe environment variable name where your Deta project key is stored\n\n\nReturns\nDataFrame\n\n\n\n\n\n\n\nCount interests\n\nsource\n\n\ncount_interests\n\n count_interests (database_name:str='users')\n\nShows each interest and how many times they occur. If needed, this can work for any column that contains a list of strings.\nUses database_to_dataframe\n\nsource\n\n\ninterestcount_to_dataframe\n\n interestcount_to_dataframe (database_name:str='users')\n\nGet interest counts as a pandas dataframe\nUses database_to_dataframe\n\n\nUser stats\n\nsource\n\n\ntotal_users\n\n total_users (database_name:str)\n\nCount total users. Uses fetch_all"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to MatchDB",
+    "section": "",
+    "text": "This is a light wrapper around deta.space’s serverless database, Base.\nMatchDB is a database of people and their interests. Use it to manage profiles and connect people who share interests.\nThe main motivation was to help to connect people in large Slack/Discord servers in the remote working community."
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "Welcome to MatchDB",
+    "section": "Install",
+    "text": "Install\npip install matchdb\n# to get the latest version\npip install git+https://github.com/batmanscode/MatchDB.git\n# install from source\ngit clone https://github.com/batmanscode/MatchDB.git"
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "Welcome to MatchDB",
+    "section": "How to use",
+    "text": "How to use\nHere’s a brief quickstart guide. Please read the complete documentation to see everything you can do!\nFirst, let’s create a new project on deta.space and save your project key to the environment variable \"DETA_PROJECT_KEY\"\nI’ve already created an environment variable but you can add it like this if you haven’t:\n\n# import os\n\n# os.environ[\"DETA_PROJECT_KEY\"] = \"...\"\n\n\nfrom matchdb.matchdb import *\n\nNext, create a name for your database. This will be visible in your project on deta.space.\nI’ll define it globally here since I’ll be using just one database but you can create as many as you like!\n\nDATABASE = \"users\"\n\n\nAdding users\nLet’s add two users\n\nadd_interests(user_id=1111,\n              group_id=2222,\n              interests=['MMA', 'memes', 'Uk', 'tea'],\n              database_name=DATABASE\n             )\n\n\nfind_user(1111, DATABASE)\n\n[{'date': '14-02-2023 06:00',\n  'group_id': 2222,\n  'interests': ['uk', 'memes', 'tea', 'mma'],\n  'key': '01GS7ASNBN7BMKCFPTCV45VWBT',\n  'user_id': 1111}]\n\n\n\nadd_interests(user_id=3333,\n              group_id=2222,\n              interests=['anime', 'memes', 'ireland', 'coffee'],\n              database_name=DATABASE\n             )\n\n\nfind_user(3333, DATABASE)\n\n[{'date': '14-02-2023 06:00',\n  'group_id': 2222,\n  'interests': ['ireland', 'anime', 'memes', 'coffee'],\n  'key': '01GS7ASNGBHHPK4YMBEHN1REEZ',\n  'user_id': 3333}]\n\n\n\n\nMatch\n\nmatch_list = match_interests(1111, DATABASE)\n\nThis will show evreyone who has common interests with useer 1111, including themselves!\n\nmatch_list\n\n[{'group_id': 2222,\n  'user_id': 1111,\n  'common interests': ['uk', 'memes', 'tea', 'mma'],\n  'common interests count': 4},\n {'group_id': 2222,\n  'user_id': 3333,\n  'common interests': ['memes'],\n  'common interests count': 1}]\n\n\nYou can exclude the user you are finding matches for like this:\n\nuser = 1111\n\nmatch_list = match_interests(1111, DATABASE)\n\n\n# for other ways to do this see here:\n# https://www.geeksforgeeks.org/python-removing-dictionary-from-list-of-dictionaries/\nmatch_list = [item for item in match_list if not (item[\"user_id\"]==user)]\n\n\nmatch_list\n\n[{'group_id': 2222,\n  'user_id': 3333,\n  'common interests': ['memes'],\n  'common interests count': 1}]\n\n\n\n\nGet your whole database\n\ndatabase_to_dataframe(DATABASE)\n\n\n\n\n\n  \n    \n      \n      date\n      group_id\n      interests\n      key\n      user_id\n    \n  \n  \n    \n      0\n      14-02-2023 06:00\n      2222\n      [uk, memes, tea, mma]\n      01GS7ASNBN7BMKCFPTCV45VWBT\n      1111\n    \n    \n      1\n      14-02-2023 06:00\n      2222\n      [ireland, anime, memes, coffee]\n      01GS7ASNGBHHPK4YMBEHN1REEZ\n      3333\n    \n  \n\n\n\n\n\n\nCount unique interests\n\ninterestcount_to_dataframe(DATABASE)\n\n\n\n\n\n  \n    \n      \n      interests\n      count\n    \n  \n  \n    \n      0\n      memes\n      2\n    \n    \n      1\n      ireland\n      1\n    \n    \n      2\n      anime\n      1\n    \n    \n      3\n      tea\n      1\n    \n    \n      4\n      coffee\n      1\n    \n    \n      5\n      uk\n      1\n    \n    \n      6\n      mma\n      1"
+  },
+  {
+    "objectID": "index.html#how-to-contribute",
+    "href": "index.html#how-to-contribute",
+    "title": "Welcome to MatchDB",
+    "section": "How to contribute",
+    "text": "How to contribute\n\nFork\nInstall (more on this below)\nMake changes in ./notebooks\n\nIn the terminal:\n\nnbdev_preview to preview docs\nnbdev_prepare (very important)\n\nAnd finally:\n\nPull request!\n\nPlease go though nbdev docs. Their end-to-end tutorial will show you most of what you need to know.\n\nInstalling for development\n\nCodespaces/VSCode\nEverything you need will be installed when you open Codespaces/VSCode; specified in .devcontainer/\nNotes for Codespaces:\n\nCurrently Jupyter notebook doesn’t work on Codespaces for an unknown reason, or at least I can’t, so you’ll have to use JupyterLab\nOpen with jupyter lab --NotebookApp.allow_origin='*' --NotebookApp.ip='0.0.0.0'\nFor more info on using see https://code.visualstudio.com/docs/datascience/notebooks-web\n\n\n\nLocal\nYou’ll need to install Jupyter and nbdev at minimum. You can do that with the following terminal commands:\npip install notebook\npip install nbdev\nnbdev_install_quarto\nnbdev_install_hooks\nFor convenience, you can install all these and optional Jupyter extensions with:\ncd MatchDB\nbash ./.devcontainer/postCreateCommand.sh\nThen install MatchDB in editable mode with pip install MatchDB/requirements.txt"
+  }
+]
